@@ -1,0 +1,12 @@
+../Core/Src/main.c:72:9:SPI_flash_read_byte	1
+../Core/Src/main.c:80:6:SPI_flash_send_byte	1
+../Core/Src/main.c:86:6:SPI_flash_select	1
+../Core/Src/main.c:90:6:SPI_flash_deselect	1
+../Core/Src/main.c:94:6:jumpToApp	1
+../Core/Src/main.c:137:6:delay	2
+../Core/Src/main.c:145:5:FLASH_EraseSector	5
+../Core/Src/main.c:198:5:main	6
+../Core/Src/main.c:293:6:SystemClock_Config	3
+../Core/Src/main.c:335:13:MX_SPI1_Init	2
+../Core/Src/main.c:373:13:MX_GPIO_Init	1
+../Core/Src/main.c:405:6:Error_Handler	1
