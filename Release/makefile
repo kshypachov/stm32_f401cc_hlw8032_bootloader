@@ -55,6 +55,9 @@ stm32_f401cc_hlw8032_bootloader.list \
 OBJCOPY_HEX += \
 stm32_f401cc_hlw8032_bootloader.hex \
 
+OBJCOPY_BIN += \
+stm32_f401cc_hlw8032_bootloader.bin \
+
 
 # All Target
 all: main-build
@@ -63,8 +66,8 @@ all: main-build
 main-build: stm32_f401cc_hlw8032_bootloader.elf secondary-outputs
 
 # Tool invocations
-stm32_f401cc_hlw8032_bootloader.elf stm32_f401cc_hlw8032_bootloader.map: $(OBJS) $(USER_OBJS) C:\Users\kirill\STM32CubeIDE\workspace_1.13.2\stm32_f401cc_hlw8032_bootloader\STM32F401CCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "stm32_f401cc_hlw8032_bootloader.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\kirill\STM32CubeIDE\workspace_1.13.2\stm32_f401cc_hlw8032_bootloader\STM32F401CCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32_f401cc_hlw8032_bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+stm32_f401cc_hlw8032_bootloader.elf stm32_f401cc_hlw8032_bootloader.map: $(OBJS) $(USER_OBJS) ../STM32F401CCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "stm32_f401cc_hlw8032_bootloader.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32F401CCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32_f401cc_hlw8032_bootloader.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -83,12 +86,17 @@ stm32_f401cc_hlw8032_bootloader.hex: $(EXECUTABLES) makefile objects.list $(OPTI
 	@echo 'Finished building: $@'
 	@echo ' '
 
+stm32_f401cc_hlw8032_bootloader.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "stm32_f401cc_hlw8032_bootloader.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout stm32_f401cc_hlw8032_bootloader.elf stm32_f401cc_hlw8032_bootloader.hex stm32_f401cc_hlw8032_bootloader.list stm32_f401cc_hlw8032_bootloader.map
+	-$(RM) default.size.stdout stm32_f401cc_hlw8032_bootloader.bin stm32_f401cc_hlw8032_bootloader.elf stm32_f401cc_hlw8032_bootloader.hex stm32_f401cc_hlw8032_bootloader.list stm32_f401cc_hlw8032_bootloader.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

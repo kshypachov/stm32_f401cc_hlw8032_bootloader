@@ -197,6 +197,7 @@ int FLASH_EraseSector(uint32_t FLASH_Sector, uint8_t VoltageRange)
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 	uint8_t 						lfsReadBuff[256];
 	uint8_t 						lfsWriteBuff[256];
@@ -230,10 +231,8 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   SPI_flash_reg_cb(SPI_flash_select, SPI_flash_deselect, SPI_flash_read_byte, SPI_flash_send_byte);
-
   flash_parameters = sFLASH_GetInfo();
-
-  if (flash_parameters.flash_id == 0x0) return -1; // jump to APP
+  if (flash_parameters.flash_id == 0x0) jumpToApp(APP_START); // jump to APP
 
   io_fs_init(lfsReadBuff, lfsWriteBuff, lfslookaheadBuff, 256, &cfg);
 	memset(&fileConf, 0, sizeof(struct lfs_file_config));
@@ -259,7 +258,6 @@ int main(void)
 		for ( addr = APP_START ; addr < APP_END ; addr = addr + sizeof(data) ){
 			res = lfs_file_read(&lfs, &file, &data, sizeof(data));
 			if (res <= 0 ) break; //из файла считалось 0 байт или ошибка, выходим
-			//FLASH_Program_Byte(addr,data);
 			HAL_FLASH_Program(FLASH_TYPEPROGRAM_BYTE, addr,data);
 		}
 

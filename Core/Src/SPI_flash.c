@@ -178,6 +178,14 @@ struct SPI_flash_info sFLASH_GetInfo(void){
 			flash_info.page_size = 256;
 			flash_info.block_count = 2048;
 			break;
+		case sFLASH_W25Q128BV_ID:
+			flash_info.flash_id = sFLASH_W25Q128BV_ID;
+			flash_info.read_size = 1;
+			flash_info.write_size = 1;
+			flash_info.erase_size = 4096;
+			flash_info.page_size = 256;
+			flash_info.block_count = 4096;
+			break;
 		case sFLASH_MX25L32xxx_ID:
 			flash_info.flash_id = sFLASH_MX25L32xxx_ID;
 			flash_info.read_size = 1;
@@ -186,7 +194,6 @@ struct SPI_flash_info sFLASH_GetInfo(void){
 			flash_info.page_size = 256;
 			flash_info.block_count = 1024;
 			break;
-
 		default:
 			flash_info.flash_id = sFLASH_UNNOUN_ID;
 			break;

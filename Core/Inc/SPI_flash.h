@@ -105,6 +105,7 @@ struct SPI_flash_info{
 #define sFLASH_W25Q16BV_ID		0xef4015
 #define sFLASH_W25Q32BV_ID		0xef4016
 #define sFLASH_W25Q64BV_ID		0xef4017
+#define sFLASH_W25Q128BV_ID     0xef4018
 #define sFLASH_M25P128_ID		0x202018
 #define sFLASH_M25P64_ID        0x202017
 #define sFLASH_MX25L32xxx_ID	0xc22016  //not recomended, Macronix use the same JEDEC ID for different chips
